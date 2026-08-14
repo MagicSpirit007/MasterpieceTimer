@@ -137,8 +137,8 @@ export function FocusSetupPage() {
         {active && (
           <div className={styles.activeBanner} role="status">
             <div>
-              <strong>有一次未完成的专注</strong>
-              <p className="t2 small">开始新的会结束当前这次。也可以先回去继续上色。</p>
+              <strong>有未完成的专注</strong>
+              <p className="t2 small">开始新的专注将结束当前会话。亦可返回继续上色。</p>
             </div>
             <button className="btn-ghost" style={{ minHeight: 36 }} onClick={() => navigate('/focus')}>
               继续
@@ -187,13 +187,13 @@ export function FocusSetupPage() {
         <div className="section-label">本次上色的画作</div>
         {artworks.length === 0 ? (
           <div className="card" style={{ padding: 20 }}>
-            <p className="t2 small">还没有画作，先去导入一幅吧。</p>
+            <p className="t2 small">暂无画作。</p>
             <button
               className="btn-ghost"
               style={{ marginTop: 12 }}
               onClick={() => navigate('/artworks')}
             >
-              去导入画作
+              导入画作
             </button>
           </div>
         ) : (
@@ -251,25 +251,25 @@ export function FocusSetupPage() {
         title="已有进行中的专注"
       >
         <p className="t2 small" style={{ marginBottom: 16 }}>
-          开始新的一次会结束当前这次。已积累的有效时长可以选择保存或放弃。
+          开始新的专注将结束当前会话。已累计的有效时长可选择保存或放弃。
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <button className="btn-primary" onClick={() => navigate('/focus')}>
-            回去继续
+            返回继续
           </button>
           <button
             className="btn-ghost"
             disabled={starting}
             onClick={() => void begin('save')}
           >
-            保存后开始新的
+            保存并开始新专注
           </button>
           <button
             className="btn-ghost btn-danger"
             disabled={starting}
             onClick={() => void begin('discard')}
           >
-            放弃后开始新的
+            放弃并开始新专注
           </button>
         </div>
       </Sheet>

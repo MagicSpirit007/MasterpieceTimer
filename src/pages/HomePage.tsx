@@ -115,20 +115,18 @@ export function HomePage() {
 
   return (
     <div className={`page ${snapshot ? styles.hasNow : ''}`}>
+      <p className={styles.greet}>
+        {snapshot
+          ? '专注进行中'
+          : todayTotal > 0
+            ? `今日已专注 ${formatDuration(todayTotal)}`
+            : poemForDay().text}
+      </p>
+      {!snapshot && todayTotal === 0 && (
+        <p className={styles.poemFrom}>{poemForDay().from}</p>
+      )}
       <div className={styles.header}>
-        <div>
-          <p className={styles.greet}>
-            {snapshot
-              ? '有一次专注进行中'
-              : todayTotal > 0
-                ? `今日已专注 ${formatDuration(todayTotal)}`
-                : poemForDay().text}
-          </p>
-          {!snapshot && todayTotal === 0 && (
-            <p className={styles.poemFrom}>{poemForDay().from}</p>
-          )}
-          <h1 className="page-title">绘梦</h1>
-        </div>
+        <h1 className="page-title">绘梦</h1>
         <div className={styles.headerActions}>
           {projects.length > 0 && (
             <button
@@ -150,7 +148,7 @@ export function HomePage() {
       <div className="page-scroll">
         {projects.length === 0 ? (
           <div className={ui.empty}>
-            <p>创建一个专注项目，开始你的第一次上色</p>
+            <p>暂无项目。</p>
             <button className="btn-primary" onClick={() => setCreateOpen(true)}>
               新建项目
             </button>
@@ -179,7 +177,7 @@ export function HomePage() {
                     <span className="xs t3">
                       {st && st.today > 0
                         ? `今天 ${formatDuration(st.today)}`
-                        : '今天还没开始'}
+                        : '今日暂无专注'}
                       {st?.last != null
                         ? ` · 上次 ${formatDateShort(st.last)}`
                         : ''}

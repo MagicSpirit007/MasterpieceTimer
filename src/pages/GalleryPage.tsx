@@ -173,7 +173,7 @@ export function GalleryPage() {
           <h1 className="page-title" style={{ paddingLeft: 0 }}>
             展览
           </h1>
-          <p>还没有完全上色的画作。完成一次计划专注，它就会成为藏品。</p>
+          <p>暂无完全上色的画作。</p>
         </div>
       )}
 

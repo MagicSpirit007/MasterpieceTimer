@@ -40,6 +40,26 @@
 .block {
   padding: var(--space-4);
 }
+
+.hoursRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.hoursField {
+  width: 148px;
+  text-align: center;
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+}
+
+.hoursUnit {
+  font-size: var(--text-md);
+  color: var(--text-2);
+  flex-shrink: 0;
+}
 .block + .block {
   border-top: 0.5px solid var(--separator);
 }

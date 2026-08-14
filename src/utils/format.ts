@@ -30,6 +30,23 @@ export function secondsToHours(s: number): number {
   return Math.round((s / 3600) * 10) / 10
 }
 
+/** 上色时长：小时一位小数，内部仍存整分钟 */
+export const COLORING_HOURS_MIN = 0.1
+export const COLORING_HOURS_MAX = 24
+
+export function minutesToColoringHours(minutes: number): number {
+  return Math.round((minutes / 60) * 10) / 10
+}
+
+export function coloringHoursToMinutes(hours: number): number {
+  const h = clamp(Math.round(hours * 10) / 10, COLORING_HOURS_MIN, COLORING_HOURS_MAX)
+  return Math.max(1, Math.round(h * 60))
+}
+
+export function formatColoringHours(minutes: number): string {
+  return minutesToColoringHours(minutes).toFixed(1)
+}
+
 /** 时间戳 → "HH:MM" */
 export function formatTime(ts: number): string {
   const d = new Date(ts)

@@ -1,12 +1,18 @@
 /**
  * ArtworkReveal —— 画作随专注进度恢复色彩。
  *
- * 适配：高度铺满舞台，上色竖线钉在视口水平中线，画布平移。
- * 全览：contain 整幅，线在画上走。
- * 手卷影像为右起首、左题跋。
+ * 虚拟分割线右侧为已上色、左侧未上色，界面不画这根线。
+ * 适配：高度铺满。画比屏宽时，上色铺不满右半屏则画不动、等线走到屏心；
+ * 之后画跟着线平移，使线留在屏心；末端画停在左齐。
+ * 全览：contain 整幅；手卷从右起首平移到左题跋。
  */
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import type { ArtworkDisplayMode } from '../types/models'
+import {
+  computeFitTranslate,
+  computeOverviewTranslate,
+  startInsetPx,
+} from './artworkFrame'
 import styles from './ArtworkReveal.module.css'
 
 export type ArtworkViewMode = 'fit' | 'overview'
@@ -16,7 +22,6 @@ export interface ArtworkRevealProps {
   aspectRatio: number
   progress: number
   alt: string
-  hideBoundaryWhenDone?: boolean
   maxFill?: number
   rounded?: boolean
   displayMode?: ArtworkDisplayMode
@@ -29,7 +34,6 @@ export function ArtworkReveal({
   aspectRatio,
   progress,
   alt,
-  hideBoundaryWhenDone = true,
   maxFill = 0.95,
   rounded = true,
   displayMode = 'easel',
@@ -72,26 +76,19 @@ export function ArtworkReveal({
   }, [aspectRatio, maxFill, fit])
 
   const p = Math.min(1, Math.max(0, progress))
-  const done = p >= 1
-  const revealStyle = { '--reveal': p } as CSSProperties
+  const inset = rect.w > 0 ? startInsetPx(rect.w, scroll) / rect.w : 0
+  const revealStyle = { '--reveal': p, '--inset': inset } as CSSProperties
 
   let tx = 0
+  let ty = 0
   if (rect.w > 0) {
     if (fit) {
-      const startInset = scroll ? rect.w * 0.08 : 0
-      const revealX = scroll
-        ? (1 - p) * (rect.w - startInset)
-        : p * rect.w
-      tx = rect.stageW / 2 - revealX
-    } else if (scroll && rect.w > rect.stageW) {
-      const minTx = rect.stageW - rect.w
-      const startInset = rect.w * 0.08
-      const travel = Math.max(1, rect.w - rect.stageW - startInset)
-      tx = Math.max(minTx, Math.min(0, -(startInset + p * travel)))
+      tx = computeFitTranslate(p, rect.w, rect.stageW, startInsetPx(rect.w, scroll))
+      ty = (rect.stageH - rect.h) / 2
+    } else {
+      tx = computeOverviewTranslate(p, rect.w, rect.stageW, scroll)
     }
   }
-
-  const pinLine = fit
 
   return (
     <div
@@ -104,8 +101,8 @@ export function ArtworkReveal({
       aria-label={
         onToggleView
           ? fit
-            ? '当前适配屏幕，点按切换全览'
-            : '当前全览，点按切换适配屏幕'
+            ? '当前适配屏幕，轻点切换全览'
+            : '当前全览，轻点切换适配屏幕'
           : undefined
       }
       onClick={onToggleView}
@@ -127,7 +124,7 @@ export function ArtworkReveal({
             width: rect.w,
             height: rect.h,
             borderRadius: rounded && !fit ? undefined : 0,
-            transform: `translate3d(${tx}px, 0, 0)`,
+            transform: `translate3d(${tx}px, ${ty}px, 0)`,
             ...revealStyle,
           }}
         >
@@ -138,20 +135,9 @@ export function ArtworkReveal({
             alt=""
             aria-hidden
             draggable={false}
-            data-scroll={scroll}
             style={revealStyle}
-          />
-          <div
-            className={styles.boundary}
-            style={revealStyle}
-            data-hidden={pinLine || (hideBoundaryWhenDone && done)}
-            data-scroll={scroll}
-            aria-hidden
           />
         </div>
-      )}
-      {pinLine && !(hideBoundaryWhenDone && done) && (
-        <div className={styles.centerLine} aria-hidden />
       )}
     </div>
   )

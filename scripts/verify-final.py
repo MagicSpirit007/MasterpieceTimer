@@ -20,7 +20,7 @@ with sync_playwright() as p:
     page.get_by_text("千里江山图").first.click()
     page.get_by_role("button", name="开始专注").click()
     page.wait_for_timeout(600)
-    discard = page.get_by_role("button", name="放弃后开始新的")
+    discard = page.get_by_role("button", name="放弃并开始新专注")
     if discard.count():
         discard.first.click()
         page.wait_for_timeout(1200)

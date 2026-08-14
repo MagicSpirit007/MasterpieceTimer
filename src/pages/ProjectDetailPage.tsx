@@ -125,7 +125,7 @@ export function ProjectDetailPage() {
         {sessions.length === 0 ? (
           <div className="card">
             <div className={ui.listRow}>
-              <span className="small t3">还没有专注记录</span>
+              <span className="small t3">暂无专注记录</span>
             </div>
           </div>
         ) : (

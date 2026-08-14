@@ -331,7 +331,7 @@ export function SessionEditSheet({
             <span className={styles.groupLabel}>备注</span>
             <textarea
               className="field"
-              placeholder="想说点什么？（可选）"
+              placeholder="备注（可选）"
               value={note}
               onChange={(e) => setNote(e.target.value)}
             />

@@ -153,11 +153,10 @@ export function StatsPage() {
 
         <p className="section-label">专注趋势</p>
         <div className={`card ${styles.chartCard}`}>
-          <p className={`t3 xs ${styles.chartNote}`}>单位：小时 · 跨日记录按重叠比例分摊</p>
           {trendPoints.length > 0 ? (
             <TrendChart points={trendPoints} />
           ) : (
-            <p className="t3 small">这个范围还没有记录</p>
+            <p className="t3 small">该时段暂无记录</p>
           )}
         </div>
 
@@ -173,7 +172,7 @@ export function StatsPage() {
               )}
             </>
           ) : (
-            <p className="t3 small">没有可比较的项目</p>
+            <p className="t3 small">暂无项目可比较</p>
           )}
         </div>
 

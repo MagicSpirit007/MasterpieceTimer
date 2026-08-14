@@ -57,7 +57,7 @@ export function AppearancePage() {
 
         <p className="section-label">画布</p>
         <p className={`t3 xs ${styles.hint}`}>
-          非专注页使用这里的画布。专注时自动换成该画历史上的底材。
+          非专注页使用所选画布。专注时改用该画的历史底材。
         </p>
         <div className={styles.canvasGrid} role="listbox" aria-label="画布样式">
           {CANVAS_CATALOG.map((c) => (

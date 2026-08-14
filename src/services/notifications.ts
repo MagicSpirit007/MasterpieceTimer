@@ -33,7 +33,7 @@ export async function scheduleFinishNotification(
         {
           id,
           title: '专注完成',
-          body: '画作已完全恢复色彩，来看看成果吧。',
+          body: '画作已完成上色。',
           schedule: { at: new Date(atTs), allowWhileIdle: true },
         },
       ],

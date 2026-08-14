@@ -11,8 +11,7 @@
   overflow: hidden;
 }
 
-/* 画作实际显示矩形：contain 语义由 JS 计算宽高，
-   遮罩与边界线均以该矩形为坐标基准 */
+/* 画作实际显示矩形：contain 语义由 JS 计算宽高 */
 .artRect {
   position: relative;
   flex-shrink: 0;
@@ -33,27 +32,11 @@
 }
 
 .stage[data-view='fit'] .artRect {
-  border-radius: 0;
-}
-
-.centerLine {
   position: absolute;
-  top: 8%;
-  bottom: 8%;
-  left: 50%;
-  width: 2px;
-  margin-left: -1px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.85) 18%,
-    rgba(255, 255, 255, 0.85) 82%,
-    transparent
-  );
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  opacity: 0.75;
-  pointer-events: none;
-  z-index: 2;
+  left: 0;
+  top: 0;
+  border-radius: 0;
+  transition: transform 240ms linear;
 }
 
 .layer {
@@ -69,50 +52,19 @@
 }
 
 .color {
-  clip-path: inset(0 calc((1 - var(--reveal, 0)) * 100%) 0 0);
-  transition: clip-path 240ms linear;
-}
-
-.color[data-scroll='true'] {
-  clip-path: inset(0 0 0 calc((1 - var(--reveal, 0)) * 100%));
-}
-
-
-
-.boundary {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--reveal, 0) * 100%);
-  width: 2px;
-  margin-left: -1px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.85) 18%,
-    rgba(255, 255, 255, 0.85) 82%,
-    transparent
+  /* 右侧已上色，自右向左推进；--inset 跳过手卷右端包首 */
+  clip-path: inset(
+    0
+    calc(var(--inset, 0) * 100%)
+    0
+    calc((1 - var(--reveal, 0)) * (1 - var(--inset, 0)) * 100%)
   );
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  opacity: 0.75;
-  transition: left 240ms linear;
-  pointer-events: none;
-}
-
-.boundary[data-scroll='true'] {
-  left: calc((1 - var(--reveal, 0)) * 100%);
-}
-
-
-
-.boundary[data-hidden='true'] {
-  opacity: 0;
-  transition: opacity var(--dur-med) var(--ease-out);
+  transition: clip-path 240ms linear;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .color,
-  .boundary {
+  .stage[data-view='fit'] .artRect {
     transition: none;
   }
 }

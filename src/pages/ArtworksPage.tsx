@@ -82,7 +82,7 @@ export function ArtworksPage() {
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             gap: 12, padding: '40px 24px', color: 'var(--text-3)', textAlign: 'center',
           }}>
-            还没有画作。导入一幅喜欢的作品，让专注为它上色。
+            暂无画作。
           </div>
         ) : (
           <div className={styles.grid}>

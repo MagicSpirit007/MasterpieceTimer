@@ -86,7 +86,7 @@ def main() -> None:
         page.goto(BASE + "#/me/archive")
         page.wait_for_timeout(500)
         shot(page, "06-archive")
-        if page.get_by_text("还没有归档的项目").count() or page.get_by_text("取消归档").count():
+        if page.get_by_text("暂无归档项目").count() or page.get_by_text("取消归档").count():
             notes.append("PASS archive page opens")
 
         # 7 feedback

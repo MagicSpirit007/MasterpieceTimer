@@ -1,25 +1,37 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { DurationPicker } from '../components/ui'
 import { useDataVersion } from '../db/events'
 import { setAllRequiredFocusSeconds } from '../db/repositories/artworks'
 import { loadSettings, saveSettings } from '../services/settings'
+import {
+  COLORING_HOURS_MAX,
+  COLORING_HOURS_MIN,
+  coloringHoursToMinutes,
+  formatColoringHours,
+} from '../utils/format'
 import styles from './SettingsPage.module.css'
-
-const PRESETS = [15, 25, 45, 60, 90, 120]
 
 export function ColoringDurationPage() {
   const navigate = useNavigate()
   const version = useDataVersion()
   const [minutes, setMinutes] = useState<number | null>(null)
+  const [draft, setDraft] = useState('')
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    void loadSettings().then((s) => setMinutes(s.artworkColoringMinutes))
+    void loadSettings().then((s) => {
+      setMinutes(s.artworkColoringMinutes)
+      setDraft(formatColoringHours(s.artworkColoringMinutes))
+    })
   }, [version])
 
-  const apply = async (m: number) => {
+  const applyMinutes = async (m: number) => {
+    if (minutes === m) {
+      setDraft(formatColoringHours(m))
+      return
+    }
     setMinutes(m)
+    setDraft(formatColoringHours(m))
     setSaving(true)
     try {
       await saveSettings({ artworkColoringMinutes: m })
@@ -27,6 +39,16 @@ export function ColoringDurationPage() {
     } finally {
       setSaving(false)
     }
+  }
+
+  const commit = (raw: string) => {
+    if (minutes == null) return
+    const n = Number(raw)
+    if (!Number.isFinite(n)) {
+      setDraft(formatColoringHours(minutes))
+      return
+    }
+    void applyMinutes(coloringHoursToMinutes(n))
   }
 
   if (minutes == null) return <div className="page" />
@@ -41,20 +63,34 @@ export function ColoringDurationPage() {
       <h1 className="page-title">上色时长</h1>
       <div className="page-scroll">
         <p className={`t3 xs ${styles.hint}`}>
-          一幅画从全灰到上满色，需要多少有效专注。改完后所有画作共用这个分母。
+          一幅画完成上色需要的有效专注时长。
         </p>
         <div className={styles.group}>
           <div className={styles.block}>
-            <DurationPicker
-              minutes={minutes}
-              onChange={(m) => void apply(m)}
-              presets={PRESETS}
-              ariaLabel="上色所需时长"
-            />
+            <div className={styles.hoursRow}>
+              <input
+                className={`field ${styles.hoursField}`}
+                type="text"
+                inputMode="decimal"
+                enterKeyHint="done"
+                aria-label="上色所需小时数"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                onBlur={() => commit(draft)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    ;(e.currentTarget as HTMLInputElement).blur()
+                  }
+                }}
+              />
+              <span className={styles.hoursUnit}>小时</span>
+            </div>
           </div>
         </div>
         <p className={`t3 xs ${styles.hint}`}>
-          当前 {minutes} 分钟{saving ? ' · 正在保存' : ''}
+          {COLORING_HOURS_MIN.toFixed(1)}–{COLORING_HOURS_MAX.toFixed(1)} 小时
+          {saving ? ' · 保存中' : ''}
         </p>
       </div>
     </div>

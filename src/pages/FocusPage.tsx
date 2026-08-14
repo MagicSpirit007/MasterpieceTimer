@@ -170,12 +170,12 @@ export function FocusPage() {
         <div className={styles.artCaption}>
           {artwork ? `${artwork.title} · ${artwork.artist}` : ''}
           <span className={styles.viewHint}>
-            {viewMode === 'fit' ? '适配 · 点画全览' : '全览 · 点画适配'}
+            {viewMode === 'fit' ? '适配 · 轻点全览' : '全览 · 轻点适配'}
           </span>
         </div>
       </div>
 
-      <Sheet open={endSheetOpen} onClose={() => setEndSheetOpen(false)} title="结束这次专注？">
+      <Sheet open={endSheetOpen} onClose={() => setEndSheetOpen(false)} title="结束本次专注？">
         <p className="t2 small" style={{ marginBottom: 16 }}>
           已有效专注 {formatDuration(display.effectiveSeconds)}（计划 {formatDuration(snapshot.plannedSeconds)}）
         </p>
@@ -184,7 +184,7 @@ export function FocusPage() {
             保存记录并总结
           </button>
           <button className="btn-ghost" onClick={() => void parkForLater()}>
-            稍后继续这幅画
+            稍后继续本幅
           </button>
           <button className="btn-ghost btn-danger" onClick={() => setDiscardConfirm(true)}>
             放弃本次记录
@@ -251,7 +251,6 @@ function SummarySheet({
             aspectRatio={artwork.aspectRatio}
             progress={session.completionRate}
             alt={artwork.title}
-            hideBoundaryWhenDone={false}
             rounded={false}
             displayMode={artwork.displayMode}
           />
@@ -274,7 +273,7 @@ function SummarySheet({
       </p>
       <textarea
         className="field"
-        placeholder="记录一下这次专注…（可选）"
+        placeholder="记录本次专注（可选）"
         value={note}
         onChange={(e) => setNote(e.target.value)}
       />

@@ -47,7 +47,7 @@ export interface Artwork {
   createdAt: number
   /** 历史底材，专注时覆盖用户默认画布 */
   canvasId: string
-  /** 架上画左右上色；手卷自右向左走卷 */
+  /** 架上画整幅观看；手卷自右起首向左题跋走卷 */
   displayMode: ArtworkDisplayMode
 }
 
@@ -82,7 +82,7 @@ export interface UserSettings {
   appearance: 'system' | 'light' | 'dark'
   /** 非专注页默认画布 */
   canvasId: string
-  /** 完成一幅画上色所需有效专注（分钟） */
+  /** 完成一幅画上色所需有效专注（整分钟；界面以小时一位小数填写） */
   artworkColoringMinutes: number
   /** 最近一次专注配置，用于减少重复操作 */
   lastProjectId: string | null

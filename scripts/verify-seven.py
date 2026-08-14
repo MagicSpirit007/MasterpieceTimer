@@ -101,8 +101,8 @@ def main() -> None:
         page.get_by_text("千里江山图").first.click()
         page.get_by_role("button", name="开始专注").click()
         page.wait_for_timeout(400)
-        if page.get_by_text("放弃后开始新的").count():
-            page.get_by_text("放弃后开始新的").click()
+        if page.get_by_text("放弃并开始新专注").count():
+            page.get_by_text("放弃并开始新专注").click()
             page.wait_for_timeout(1200)
         page.wait_for_timeout(1000)
         page.screenshot(path=str(OUT / "s07-focus-fit.png"))

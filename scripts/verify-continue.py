@@ -34,7 +34,7 @@ def main() -> None:
         page.goto("http://localhost:5173/#/me/archive")
         page.wait_for_timeout(400)
         page.screenshot(path=str(OUT / "21-archive.png"))
-        notes.append("archive: " + ("empty ok" if page.get_by_text("还没有归档的项目").count() else "has items"))
+        notes.append("archive: " + ("empty ok" if page.get_by_text("暂无归档项目").count() else "has items"))
 
         # dark appearance
         page.goto("http://localhost:5173/#/me/appearance")
@@ -66,8 +66,8 @@ def main() -> None:
         page.get_by_text("千里江山图").first.click()
         page.get_by_role("button", name="开始专注").click()
         page.wait_for_timeout(500)
-        if page.get_by_text("放弃后开始新的").count():
-            page.get_by_text("放弃后开始新的").click()
+        if page.get_by_text("放弃并开始新专注").count():
+            page.get_by_text("放弃并开始新专注").click()
             page.wait_for_timeout(1200)
         page.wait_for_timeout(1500)
         page.screenshot(path=str(OUT / "25-focus-longscroll.png"))

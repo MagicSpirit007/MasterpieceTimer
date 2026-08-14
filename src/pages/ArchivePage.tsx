@@ -26,7 +26,7 @@ export function ArchivePage() {
       <div className="page-scroll">
         {archived.length === 0 ? (
           <div className={ui.empty}>
-            <p>还没有归档的项目</p>
+            <p>暂无归档项目</p>
           </div>
         ) : (
           <div className={styles.group}>

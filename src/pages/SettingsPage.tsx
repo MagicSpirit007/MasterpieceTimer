@@ -13,6 +13,7 @@ import {
   takePendingRestoredImage,
 } from '../services/artworkStorage'
 import type { UserSettings } from '../types/models'
+import { formatColoringHours } from '../utils/format'
 import styles from './SettingsPage.module.css'
 
 export function SettingsPage() {
@@ -99,12 +100,12 @@ export function SettingsPage() {
           <button className={styles.navRow} onClick={() => navigate('/me/coloring')}>
             <span>上色时长</span>
             <span className={styles.chev}>
-              {settings.artworkColoringMinutes} 分钟 ›
+              {formatColoringHours(settings.artworkColoringMinutes)} 小时 ›
             </span>
           </button>
           <button className={styles.navRow} onClick={() => navigate('/me/appearance')}>
             <span>外观</span>
-            <span className={styles.chev}>浅深色与画布 ›</span>
+            <span className={styles.chev}>明暗与画布 ›</span>
           </button>
           <button className={styles.navRow} onClick={() => navigate('/me/feedback')}>
             <span>反馈</span>

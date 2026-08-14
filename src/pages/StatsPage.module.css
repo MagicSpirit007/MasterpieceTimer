@@ -114,9 +114,6 @@
 .chartCard {
   padding: var(--space-4);
 }
-.chartNote {
-  margin-bottom: var(--space-3);
-}
 
 .sessionMain {
   flex: 1;
