@@ -1,0 +1,134 @@
+.group {
+  background: var(--bg-raised);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.avatarBtn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--tint-soft);
+  color: var(--tint-strong);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nameField {
+  flex: 1;
+}
+
+.block {
+  padding: var(--space-4);
+}
+.block + .block {
+  border-top: 0.5px solid var(--separator);
+}
+
+.blockLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin-bottom: var(--space-3);
+}
+
+.toggleRow,
+.navRow,
+.archiveRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding: 0 var(--space-4);
+  width: 100%;
+  text-align: left;
+}
+
+.archiveName {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  font-weight: 700;
+}
+
+.toggleRow + .toggleRow,
+.navRow + .navRow,
+.archiveRow + .archiveRow {
+  border-top: 0.5px solid var(--separator);
+}
+
+.chev {
+  color: var(--text-3);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+.danger {
+  color: var(--danger);
+}
+
+.hint {
+  margin: var(--space-3) var(--space-2) 0;
+  line-height: 1.5;
+}
+
+.canvasGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.canvasCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+  border: 1.5px solid transparent;
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.canvasCard:active {
+  transform: scale(0.97);
+}
+.canvasCard[data-active='true'] {
+  border-color: var(--tint-strong);
+}
+
+.canvasPreview {
+  display: block;
+  height: 72px;
+  border-radius: var(--radius-sm);
+}
+
+.canvasName {
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.canvasNote {
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}

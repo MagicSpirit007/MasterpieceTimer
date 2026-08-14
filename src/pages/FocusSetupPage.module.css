@@ -1,0 +1,118 @@
+/* 专注设置流程：单页呈现全部配置，确认后进入专注页 */
+
+.activeBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-lg);
+  background: var(--tint-soft);
+}
+
+.activeBanner button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.activeBanner strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.confirmBar {
+  position: sticky;
+  bottom: calc(var(--space-4) + var(--safe-bottom));
+  margin-top: var(--space-6);
+}
+
+.artScroll {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  padding: var(--space-1);
+  scrollbar-width: none;
+}
+.artScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.artCard {
+  flex-shrink: 0;
+  width: 132px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast);
+  position: relative;
+}
+
+.artCard[data-active='true'] {
+  box-shadow: 0 0 0 2.5px var(--tint-strong);
+  transform: translateY(-2px);
+}
+
+.artThumb {
+  width: 132px;
+  height: 132px;
+  object-fit: cover;
+  background: var(--fill);
+}
+
+.artMeta {
+  padding: var(--space-2) var(--space-3);
+}
+
+.artTitle {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artSub {
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressTrack {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--fill);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--tint-strong);
+  border-radius: 2px;
+}
+
+.projectChips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-1);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+.summaryRow strong {
+  color: var(--text-1);
+  font-weight: 700;
+}

@@ -1,0 +1,124 @@
+/* 页面地：每块画布自带洗色 + 肌理。避免细密横线造成条带接缝。 */
+
+html,
+body {
+  background-color: var(--canvas-wash, var(--bg));
+}
+
+body {
+  background-image: var(--canvas-texture);
+  background-size: var(--canvas-size, 640px 480px);
+  background-repeat: repeat;
+}
+
+.canvas-swatch {
+  background-color: var(--canvas-wash, var(--bg));
+  background-image: var(--canvas-texture);
+  background-size: var(--canvas-size, 640px 480px);
+}
+
+:root[data-canvas='aged-xuan'],
+.canvas-swatch[data-canvas='aged-xuan'] {
+  --canvas-wash: oklch(93% 0.028 85);
+  --canvas-size: 720px 560px;
+  --canvas-texture:
+    radial-gradient(ellipse 180px 90px at 18% 22%, rgba(132, 86, 42, 0.09), transparent 70%),
+    radial-gradient(ellipse 140px 80px at 78% 70%, rgba(110, 70, 30, 0.07), transparent 72%),
+    radial-gradient(ellipse 100px 60px at 42% 84%, rgba(160, 110, 50, 0.05), transparent 65%);
+}
+
+:root[data-canvas='raw-xuan'],
+.canvas-swatch[data-canvas='raw-xuan'] {
+  --canvas-wash: oklch(95% 0.01 230);
+  --canvas-size: 640px 640px;
+  --canvas-texture:
+    radial-gradient(circle at 30% 30%, rgba(40, 55, 70, 0.05), transparent 46%),
+    radial-gradient(circle at 76% 66%, rgba(50, 60, 70, 0.04), transparent 42%);
+}
+
+:root[data-canvas='sized-xuan'],
+.canvas-swatch[data-canvas='sized-xuan'] {
+  --canvas-wash: oklch(96% 0.014 92);
+  --canvas-size: 480px 480px;
+  --canvas-texture:
+    radial-gradient(circle at 50% 40%, rgba(90, 78, 50, 0.035), transparent 55%);
+}
+
+:root[data-canvas='silk'],
+.canvas-swatch[data-canvas='silk'] {
+  --canvas-wash: oklch(91% 0.038 145);
+  --canvas-size: 12px 320px;
+  --canvas-texture:
+    linear-gradient(180deg, rgba(255, 248, 220, 0.18) 0%, transparent 36%, rgba(30, 70, 50, 0.05) 100%),
+    repeating-linear-gradient(90deg, rgba(40, 90, 60, 0.08) 0 1px, transparent 1px 3px);
+}
+
+:root[data-canvas='oil-linen'],
+.canvas-swatch[data-canvas='oil-linen'] {
+  --canvas-wash: oklch(88% 0.028 75);
+  --canvas-size: 36px 36px;
+  --canvas-texture:
+    repeating-linear-gradient(45deg, rgba(70, 48, 24, 0.11) 0 1.5px, transparent 1.5px 9px),
+    repeating-linear-gradient(-45deg, rgba(70, 48, 24, 0.08) 0 1.5px, transparent 1.5px 9px);
+}
+
+:root[data-canvas='oil-cotton'],
+.canvas-swatch[data-canvas='oil-cotton'] {
+  --canvas-wash: oklch(92% 0.014 80);
+  --canvas-size: 18px 18px;
+  --canvas-texture:
+    repeating-linear-gradient(90deg, rgba(50, 44, 36, 0.08) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg, rgba(50, 44, 36, 0.06) 0 1px, transparent 1px 5px);
+}
+
+:root[data-canvas='wood-panel'],
+.canvas-swatch[data-canvas='wood-panel'] {
+  --canvas-wash: oklch(84% 0.055 68);
+  --canvas-size: 220px 420px;
+  --canvas-texture:
+    repeating-linear-gradient(
+      90deg,
+      rgba(90, 48, 16, 0.14) 0 3px,
+      rgba(150, 96, 40, 0.05) 10px,
+      transparent 22px 34px
+    );
+}
+
+:root[data-canvas='wc-coldpress'],
+.canvas-swatch[data-canvas='wc-coldpress'] {
+  --canvas-wash: oklch(96% 0.01 95);
+  --canvas-size: 80px 80px;
+  --canvas-texture:
+    radial-gradient(circle at 22% 28%, rgba(40, 40, 40, 0.07) 0 1.4px, transparent 1.8px),
+    radial-gradient(circle at 68% 62%, rgba(40, 40, 40, 0.06) 0 1.1px, transparent 1.5px),
+    radial-gradient(circle at 44% 82%, rgba(40, 40, 40, 0.05) 0 1.6px, transparent 2px);
+}
+
+:root[data-canvas='kraft'],
+.canvas-swatch[data-canvas='kraft'] {
+  --canvas-wash: oklch(76% 0.07 68);
+  --canvas-size: 560px 560px;
+  --canvas-texture:
+    radial-gradient(circle at 28% 40%, rgba(80, 36, 8, 0.1), transparent 46%),
+    radial-gradient(circle at 80% 72%, rgba(90, 42, 10, 0.08), transparent 40%);
+}
+
+:root[data-canvas='modern-white'],
+.canvas-swatch[data-canvas='modern-white'] {
+  --canvas-wash: oklch(98% 0.004 90);
+  --canvas-size: 24px 24px;
+  --canvas-texture:
+    repeating-linear-gradient(90deg, rgba(30, 30, 30, 0.035) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(0deg, rgba(30, 30, 30, 0.028) 0 1px, transparent 1px 6px);
+}
+
+:root[data-theme='dark'][data-canvas='aged-xuan'] { --canvas-wash: oklch(22% 0.03 80); }
+:root[data-theme='dark'][data-canvas='raw-xuan'] { --canvas-wash: oklch(20% 0.015 230); }
+:root[data-theme='dark'][data-canvas='sized-xuan'] { --canvas-wash: oklch(21% 0.016 90); }
+:root[data-theme='dark'][data-canvas='silk'] { --canvas-wash: oklch(20% 0.03 145); }
+:root[data-theme='dark'][data-canvas='oil-linen'] { --canvas-wash: oklch(20% 0.024 75); }
+:root[data-theme='dark'][data-canvas='oil-cotton'] { --canvas-wash: oklch(20% 0.014 80); }
+:root[data-theme='dark'][data-canvas='wood-panel'] { --canvas-wash: oklch(22% 0.04 68); }
+:root[data-theme='dark'][data-canvas='wc-coldpress'] { --canvas-wash: oklch(19% 0.01 95); }
+:root[data-theme='dark'][data-canvas='kraft'] { --canvas-wash: oklch(24% 0.045 68); }
+:root[data-theme='dark'][data-canvas='modern-white'] { --canvas-wash: oklch(18% 0.006 90); }

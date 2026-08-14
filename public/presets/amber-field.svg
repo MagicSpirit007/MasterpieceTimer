@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="asky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4e3c2"/>
+      <stop offset="0.6" stop-color="#e8c48f"/>
+      <stop offset="1" stop-color="#d9a960"/>
+    </linearGradient>
+    <linearGradient id="afield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9963f"/>
+      <stop offset="1" stop-color="#9c6f2a"/>
+    </linearGradient>
+    <filter id="asoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#asky)"/>
+  <circle cx="820" cy="240" r="110" fill="#fbf3dd" opacity="0.9" filter="url(#asoft)"/>
+  <path d="M0 470 Q 300 420 620 460 T 1200 440 V 900 H 0 Z" fill="#caa053"/>
+  <path d="M0 560 Q 340 500 700 550 T 1200 530 V 900 H 0 Z" fill="url(#afield)"/>
+  <path d="M0 700 Q 380 640 760 690 T 1200 670 V 900 H 0 Z" fill="#86602a"/>
+  <g opacity="0.5" filter="url(#asoft)">
+    <ellipse cx="300" cy="610" rx="180" ry="16" fill="#e9c987"/>
+    <ellipse cx="900" cy="760" rx="220" ry="18" fill="#7a5423"/>
+  </g>
+  <path d="M0 820 Q 420 770 840 810 T 1200 800 V 900 H 0 Z" fill="#6e4c20"/>
+</svg>

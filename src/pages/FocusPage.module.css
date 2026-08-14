@@ -1,0 +1,138 @@
+/* 沉浸式专注页 */
+
+.page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--canvas-wash, var(--canvas-bg));
+  background-image: var(--canvas-texture);
+  background-size: var(--canvas-size, 240px 240px);
+  transition: background-color var(--dur-slow) var(--ease-in-out);
+  padding-top: var(--safe-top);
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.info {
+  padding: var(--space-3) var(--space-4)
+    calc(var(--space-5) + var(--safe-bottom));
+  text-align: center;
+}
+
+.clockRow {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.clockBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.clockBtn:active {
+  transform: scale(0.97);
+}
+.clockBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.clockBtnMain {
+  background: color-mix(in oklch, var(--tint-strong) 78%, transparent);
+  color: var(--tint-contrast);
+  border-color: color-mix(in oklch, white 30%, var(--tint-strong));
+}
+.clockBtnMain svg {
+  width: 18px;
+  height: 18px;
+}
+
+.clock {
+  font-size: var(--text-timer);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.clock[data-paused='true'] {
+  opacity: 0.45;
+}
+
+.overtime {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.artCaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.viewHint {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}
+
+.pausedHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-2);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-stroke);
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.summaryItem {
+  background: var(--fill);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.summaryValue {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.summaryLabel {
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.summaryArt {
+  position: relative;
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--canvas-bg);
+}

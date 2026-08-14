@@ -1,0 +1,28 @@
+/* Hallmark · genre: editorial · macrostructure: Workbench · design-system: design.md · designed-as-app
+ * Liquid Glass 只铺在功能层：Tab、Sheet、芯片、圆钮。内容层保持纸与画布。
+ */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+
+.glass-clear {
+  background: var(--glass-bg-clear);
+  backdrop-filter: var(--glass-blur-soft);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: var(--glass-highlight);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-clear {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-raised);
+  }
+}

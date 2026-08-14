@@ -1,0 +1,118 @@
+/* ArtworkReveal：同一定位容器内双层同图叠放，
+   底层灰度，上层原色由 clip-path 控制可见宽度。
+   --reveal（0..1）是唯一随进度变化的值，不产生新位图。 */
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 画作实际显示矩形：contain 语义由 JS 计算宽高，
+   遮罩与边界线均以该矩形为坐标基准 */
+.artRect {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  will-change: transform;
+}
+
+.stage[data-mode='handscroll'] {
+  justify-content: flex-start;
+}
+
+.stage[data-mode='handscroll'] .artRect {
+  border-radius: 10px;
+}
+
+.stage[data-view='fit'] .artRect {
+  border-radius: 0;
+}
+
+.centerLine {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.85) 18%,
+    rgba(255, 255, 255, 0.85) 82%,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gray {
+  filter: grayscale(1);
+}
+
+.color {
+  clip-path: inset(0 calc((1 - var(--reveal, 0)) * 100%) 0 0);
+  transition: clip-path 240ms linear;
+}
+
+.color[data-scroll='true'] {
+  clip-path: inset(0 0 0 calc((1 - var(--reveal, 0)) * 100%));
+}
+
+
+
+.boundary {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--reveal, 0) * 100%);
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.85) 18%,
+    rgba(255, 255, 255, 0.85) 82%,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  opacity: 0.75;
+  transition: left 240ms linear;
+  pointer-events: none;
+}
+
+.boundary[data-scroll='true'] {
+  left: calc((1 - var(--reveal, 0)) * 100%);
+}
+
+
+
+.boundary[data-hidden='true'] {
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .color,
+  .boundary {
+    transition: none;
+  }
+}

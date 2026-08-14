@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="dsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9a8a0"/>
+      <stop offset="0.5" stop-color="#b57f92"/>
+      <stop offset="1" stop-color="#7d5a78"/>
+    </linearGradient>
+    <filter id="dsoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#dsky)"/>
+  <circle cx="430" cy="360" r="100" fill="#f3d9c2" opacity="0.9" filter="url(#dsoft)"/>
+  <path d="M0 520 Q 280 430 560 500 T 1200 470 V 900 H 0 Z" fill="#6b4a66"/>
+  <path d="M0 640 Q 340 560 680 620 T 1200 590 V 900 H 0 Z" fill="#4e3750"/>
+  <g opacity="0.4" filter="url(#dsoft)">
+    <ellipse cx="800" cy="300" rx="200" ry="26" fill="#e8b8a4"/>
+    <ellipse cx="260" cy="420" rx="160" ry="20" fill="#c990a0"/>
+  </g>
+  <path d="M0 780 Q 400 720 780 770 T 1200 750 V 900 H 0 Z" fill="#372741"/>
+</svg>
