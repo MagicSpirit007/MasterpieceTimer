@@ -6,6 +6,20 @@
 
 技术栈：**React 19 + TypeScript（strict）+ Vite + Capacitor 8**
 
+## 许可
+
+本仓库源码按 [PolyForm Noncommercial License 1.0.0](LICENSE) 发布（SPDX：`PolyForm-Noncommercial-1.0.0`）。
+
+| 用途 | 是否允许 |
+| --- | --- |
+| 个人学习、研究、自用、爱好项目 | 允许 |
+| 学校、公益、公共研究等非营利机构 | 允许 |
+| 任何商业用途（上架商店、收费、嵌入产品、公司内部商用等） | **须先与作者协商并取得书面许可** |
+
+商用请开 [Issue](https://github.com/MagicSpirit007/MasterpieceTimer/issues) 说明用途，或通过 GitHub 联系 [@MagicSpirit007](https://github.com/MagicSpirit007)。
+
+内置名画影像为公有领域复制件，出处见 [ATTRIBUTION.md](ATTRIBUTION.md)，不受上表约束。
+
 ---
 
 ## 一、快速开始（Windows）
