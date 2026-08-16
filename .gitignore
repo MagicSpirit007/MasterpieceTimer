@@ -33,3 +33,5 @@ android/.cxx
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
