@@ -40,18 +40,6 @@ npx cap open android        # 用 Android Studio 打开，模拟器/真机运行
 
 前置：已安装 Android Studio 与 Android SDK（Capacitor 8 要求 Android Studio Ladybug+ / SDK 35）。
 
-### iOS 构建（重要）
-
-Windows 本机**不能**编译 iOS 包。流程：
-
-1. `npx cap add ios`（或在云端构建环境执行；需要先有 dist：`npm run build`）
-2. 将仓库推送到 Git，在 Ionic Appflow（或其他可信 macOS CI）配置构建：
-   - 构建栈需满足 Capacitor 8 要求：**Xcode 16+**
-   - 构建命令：`npm ci && npm run build && npx cap sync ios`
-3. 使用开发者本人的 Apple Developer 证书与 Provisioning Profile 签名，
-   经 TestFlight 或 Ad Hoc 分发到真实 iPhone。
-4. **真机必须验证**：视觉对齐、本地通知、后台/锁屏计时恢复、触感、
-   相册导入、系统日期选择器 —— 这些不能以 Windows 模拟器结果代替。
 
 ## 二、目录结构
 
@@ -83,86 +71,3 @@ src/
     ui.tsx / charts.tsx / TabBar.tsx
   pages/                 首页 / 项目详情 / 专注设置 / 专注页 / 统计 / 展览 / 我的 / 画作管理
 ```
-
-## 三、关键实现说明
-
-### 1. 画作上色（ArtworkReveal）
-
-- 同一定位容器内叠放两个同 URI、同 `object-fit: contain`、同尺寸的 `<img>`；
-  底层 `filter: grayscale(1)`，上层原色，用 `clip-path: inset(0 calc((1 - var(--reveal)) * 100%) 0 0)` 裁出左侧已完成区域。
-- 上色边界线是绝对定位元素，`left: calc(var(--reveal) * 100%)`，坐标基准是
-  **画作实际显示矩形**（JS 按可用空间与宽高比计算 contain 矩形），不会划过画框外留白。
-- 进度更新只改 CSS 变量 `--reveal`，配合 240ms linear transition 平滑过渡，不生成新位图。
-- `revealProgress = clamp(有效专注时长 / 计划专注时长, 0, 1)`（timer/engine.ts）。
-
-### 2. 计时可靠性
-
-- 不依赖定时回调累加。快照字段：`startedAtUtc / accumulatedEffectiveMs /
-  segmentStartedAtUtc / accumulatedPausedMs / pauseStartedAtUtc / state`。
-- 有效时长 = `accumulatedEffectiveMs + (running ? now - segmentStartedAtUtc : 0)`。
-- `appStateChange`：进后台立即固化快照到 Preferences；回前台按 UTC 重算，
-  锁屏/挂起/杀进程重开均不丢进度。重启后自动恢复到专注页。
-- 倒计时开始/恢复时用本地通知调度结束提醒；暂停/提前结束/放弃时取消。
-- rAF/setInterval 仅用于刷新显示（4Hz）。
-
-### 3. 数据层
-
-- SQLite（原生 `@capacitor-community/sqlite`；Web 预览 sql.js，同一套 SQL 与迁移），
-  schema 版本由 `PRAGMA user_version` 管理，新增变更追加迁移脚本。
-- 写操作走显式事务；常用查询字段已建索引。
-- Preferences 只存设置与活动会话快照；画作文件在 Filesystem 私有目录。
-- 编辑/删除记录后按全量会话 `recomputeArtworkAccumulation` 重算画作进度，保证统计一致。
-
-### 4. 动态主题色
-
-- 导入时对图片降采样做色相聚类取代表色；颜色过杂或失败回退中性色板。
-- 派生色板时刻意降饱和（≤0.38）、按明暗模式控制明度并与基础背景混合，
-  文字色固定、明度范围受控，保证可读性。
-- 切换画作时通过 CSS transition 平滑过渡背景。
-
-### 5. 补记与编辑
-
-- 记录行左滑露出「补记 / 编辑」并列按钮（平台规范优先的稳定方案，
-  未采用两段阈值连续手势以免破坏列表滚动）。
-- 补记必须选起始+结束时间，不允许孤立分钟数；原生调用 iOS 系统日期选择器，
-  Web 回退 `<input type="date">/<input type="time">`。
-- 校验：结束晚于开始；禁止未来记录；时间重叠需勾选确认；跨日记录按重叠比例
-  拆分进统计。补记/编辑分别打 `isManual` / `isEdited` 标记。
-
-## 四、插件清单（版本已锁定）
-
-| 插件 | 用途 |
-| --- | --- |
-| @capacitor/app | appStateChange 前后台恢复 |
-| @capacitor/local-notifications | 倒计时结束通知 |
-| @capacitor/preferences | 设置 + 会话快照 |
-| @capacitor/filesystem | 画作原图/缩略图 |
-| @capacitor/camera | 相册选图 |
-| @capacitor/haptics | 完成触感 |
-| @capacitor/status-bar / splash-screen | 状态栏样式 / 启动屏 |
-| @capacitor-community/sqlite | 业务数据库 |
-| @pantrist/capacitor-date-picker | iOS 系统日期/时间选择器（Web 有语义等价回退） |
-
-## 五、验收自查（Web 预览即可验证大部分）
-
-- [x] 计时开始画作全灰，随进度从左向右恢复；0%/50%/100% 与横/竖/方画幅对齐
-- [x] 正/倒计时均有计划时长；暂停不计入有效时长；正计时超时单独显示
-- [x] 后台/刷新/重开后按时间戳恢复计时与画作进度
-- [x] 主流程：选项目 → 模式与时长 → 选画 → 专注 → 总结（含备注）
-- [x] 项目新建/重命名/排序/归档/删除；记录补记/编辑/删除并触发统计重算
-- [x] 统计：今日/指定日期/月/年/自定义；总量、项目分布、趋势
-- [x] 完成画作进展览，未完成在「创作中」；同一画作只保留一件藏品、累计时长
-- [x] 我的：资料、默认专注、声音/触感/通知、外观、画作管理、归档找回、JSON 备份
-- [x] 动态主题色协调且可读；浅色/深色；安全区适配
-- [x] 计时引擎与跨日拆分有纯函数测试（`npm test`）
-- [ ] iOS 真机：通知/后台计时/触感/相册导入/系统日期选择器（需 macOS 云构建 + 真机）
-- [ ] Android 真机：同上原生能力尚未在本机替代验收
-
-## 六、已知限制与后续建议
-
-- Web 预览的 SQLite 经 localStorage 持久化数据库文件（约 5MB 上限，仅开发用）；
-  正式数据在原生 SQLite。
-- Android 已锁定竖屏；iOS 需在云端工程的 Info.plist 中设置（画作本身已兼容横版）。
-- JSON 备份不含画作原图/缩略图；换机后需重新导入图片。后续可加 WebDAV/云同步。
-- 统计趋势图在「年」粒度按月聚合，「日」粒度按小时聚合；跨日记录按重叠比例分摊。
-- 相册选择在系统回收应用后通过 `appRestoredResult` 恢复；须在 Android 真机验证。
