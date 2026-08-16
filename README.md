@@ -12,7 +12,6 @@ Web 预览：https://magicspirit007.github.io/MasterpieceTimer/
 
 浏览器即可走完主流程（选项目、专注上色、统计、展览）。通知、触感、系统日期选择器等原生能力不可用；数据存在本机浏览器，清站点数据会丢失。
 
-也可把本仓库导入 [Vercel](https://vercel.com/new) 或 Cloudflare Pages，构建命令 `npm run build`，输出目录 `dist`。
 
 ## 许可
 
